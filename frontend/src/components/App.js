@@ -7,11 +7,12 @@ import NewPost from './NewPost.js'
 
 import { getAll, getCategories, getPost, getComments, getCategoryPosts } from '../helpers/api.js'
 
-let token = localStorage.token
-if (!token)
-  token = localStorage.token = Math.random().toString(36).substr(-8)
-
 class App extends Component {
+  constructor(props){
+    super(props)
+    this.filterByCategory = this.filterByCategory.bind(this);
+  }
+
   state = {
     categories: [],
     posts: []
@@ -30,14 +31,19 @@ class App extends Component {
     return categories.map((category) => `/${category.name}`)
   }
 
+  filterByCategory(category){
+    category === 'all' 
+      ? getAll().then((posts) => this.setState(() => ({ posts: posts })))
+      : getCategoryPosts(category).then((posts) => this.setState(() => ({ posts: posts })))
+  }
+
   render() {
     const { categories, posts } = this.state
-    console.log(this.getCategoryPaths())
     return (      
     	<Router>
         <Route exact path='/' render={() => <Redirect to='/all'/>}/>
     		<Route exact path={this.getCategoryPaths()} render={() => (
-          <Root categories={categories} posts={posts}/>
+          <Root categories={categories} posts={posts} filter={this.filterByCategory}/>
         )}/>
     		<Route exact path='/post-details/:id' render={(query) => (
           <PostDetails params={query.match.params}/>
