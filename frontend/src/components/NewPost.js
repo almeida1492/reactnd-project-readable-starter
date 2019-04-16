@@ -4,7 +4,7 @@ class NewPost extends Component{
 
 	render(){
 		return(
-			<div>
+			<div className='NewPost'>
 				<p>Type here...</p>
 				<button/>
 			</div>

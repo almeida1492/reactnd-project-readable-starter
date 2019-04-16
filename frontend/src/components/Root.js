@@ -1,18 +1,31 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import '../App.css'
 
 import PostList from './PostList.js'
 
 class Root extends Component{
 
 	render(){
+		const { categories, posts } = this.props
 		return(
-			<div>
+			<div className='Root'>
 				<h1>Categories</h1>
+				<div id='menu'>
+					<ul>
+						{categories.map((category) => 
+							<Link to={`/${category.name}`} key={category.name}>
+								<li>
+									{category.name} 
+								</li>
+							</Link>
+						)}
+					</ul>
+				</div>
 				<p>Posts</p>
-				<PostList/>
+				<PostList posts={posts}/>
 				<Link to={`/new`}>
-					<button/>
+					<button>Add</button>
 				</Link>
 			</div>
 		)
