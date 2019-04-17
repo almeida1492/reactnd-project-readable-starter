@@ -5,9 +5,8 @@ import { formatDate } from '../helpers/formatDate.js'
 import { votePost } from '../helpers/api.js'
 
 class Post extends Component{
-
 	state = {
-		voteScore: this.props.data.voteScore
+		voteScore: undefined,
 	}
 
 	handleVote(vote){
@@ -29,7 +28,7 @@ class Post extends Component{
 				</Link>
 				<div className='post-votes'>
 					<p className='vote-button' onClick={(e) => this.handleVote('upVote')}>+</p>
-					<p>{voteScore}</p>
+					<p>{voteScore === undefined ? data.voteScore : voteScore}</p>
 					<p className='vote-button' onClick={(e) => this.handleVote('downVote')}>-</p>
 				</div>
 			</div>

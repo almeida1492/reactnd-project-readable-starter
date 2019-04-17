@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 
 import Post from './Post.js'
 import PostList from './PostList.js'
-import { getPost, getComments, votePost } from '../helpers/api.js'
+import { getPost, getComments } from '../helpers/api.js'
 
 class PostDetails extends Component{
 	state = {
 		post: {},
-		comments: []
+		comments: [],
 	}
 
 	componentDidMount(){
@@ -20,7 +20,6 @@ class PostDetails extends Component{
 
 	render(){
 		const { post, comments } = this.state
-		
 		return(
 			<div className='PostDetails'>
 				<h3>Post detail</h3>

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import '../App.css'
 
 import PostList from './PostList.js'
-import { votePost } from '../helpers/api.js'
 
 class Root extends Component{
 
