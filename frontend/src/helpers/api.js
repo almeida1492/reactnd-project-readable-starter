@@ -34,3 +34,23 @@ export const getComments = (id) =>
   fetch(`${api}/posts/${id}/comments`, { headers })
     .then((res) => res.json())
     .then((comments) => comments)
+
+export const savePost = (post) =>
+  fetch(`${api}/posts`, { 
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(post)
+  }).then(res => res.json())
+
+export const votePost = (post, vote) =>
+  fetch(`${api}/posts/${post.id}`, { 
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ option: vote })
+  }).then(res => res.json())

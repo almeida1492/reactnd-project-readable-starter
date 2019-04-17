@@ -5,7 +5,7 @@ import Root from './Root.js'
 import PostDetails from './PostDetails.js'
 import NewPost from './NewPost.js'
 
-import { getAll, getCategories, getPost, getComments, getCategoryPosts } from '../helpers/api.js'
+import { getAll, getCategories, getCategoryPosts } from '../helpers/api.js'
 
 class App extends Component {
   constructor(props){
@@ -21,9 +21,6 @@ class App extends Component {
   componentDidMount(){
     getCategories().then((categories) => this.setState(() => ({ categories: categories })))
     getAll().then((posts) => this.setState(() => ({ posts: posts })))
-    // getPost('8xf0y6ziyjabvozdd253nd').then((post) => console.log(post))
-    // getComments('8xf0y6ziyjabvozdd253nd').then((comments) => console.log(comments))
-    // getCategoryPosts('react').then((posts) => console.log(posts))
   }
 
   getCategoryPaths(){
@@ -48,7 +45,9 @@ class App extends Component {
     		<Route exact path='/post-details/:id' render={(query) => (
           <PostDetails params={query.match.params}/>
         )}/>
-    		<Route exact path='/new' component={NewPost}/>
+    		<Route exact path='/new' render={() => (
+          <NewPost categories={categories}/>
+        )}/>
     	</Router>
     );
   }

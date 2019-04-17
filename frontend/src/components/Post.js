@@ -1,17 +1,38 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { formatDate } from '../helpers/formatDate.js'
+
+import { votePost } from '../helpers/api.js'
 
 class Post extends Component{
 
+	state = {
+		voteScore: this.props.data.voteScore
+	}
+
+	handleVote(vote){
+		const { data } = this.props
+		votePost(data, vote).then((post) => this.setState({ voteScore: post.voteScore }))
+	}
+
 	render(){
 		const { data } = this.props 
+		const { voteScore } = this.state
 		return(
-			<Link to={`/post-details/${data.id}`} query={{ data }}>
-				<div className='Post'>
-					<h3>{data.title}</h3>
-					<p>{data.body}</p>
+			<div className='Post'>
+				<Link to={`/post-details/${data.id}`} className='post-center'>
+					<div>
+						<p className='post-title'>{data.title}</p>
+						<p className='post-body'>{data.body}</p>
+						<p className='post-info'>{`${data.author}, ${data.category}, ${formatDate(data.timestamp)}`}</p>
+					</div>
+				</Link>
+				<div className='post-votes'>
+					<p className='vote-button' onClick={(e) => this.handleVote('upVote')}>+</p>
+					<p>{voteScore}</p>
+					<p className='vote-button' onClick={(e) => this.handleVote('downVote')}>-</p>
 				</div>
-			</Link>
+			</div>
 		)
 	}
 }

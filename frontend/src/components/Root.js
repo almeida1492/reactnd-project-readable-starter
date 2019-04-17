@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import '../App.css'
 
 import PostList from './PostList.js'
+import { votePost } from '../helpers/api.js'
 
 class Root extends Component{
 
@@ -10,7 +11,7 @@ class Root extends Component{
 		const { categories, posts, filter } = this.props
 		return(
 			<div className='Root'>
-				<h1>Categories</h1>
+				<h1>Readable</h1>
 				<div id='menu'>
 					<ul>
 						{categories.map((category) => 
@@ -23,9 +24,9 @@ class Root extends Component{
 					</ul>
 				</div>
 				<p>Posts</p>
-				<PostList posts={posts}/>
+				<PostList posts={posts} handleVote={this.handlePostVoting}/>
 				<Link to={`/new`}>
-					<button>Add</button>
+					<button className='add-btn'>Add</button>
 				</Link>
 			</div>
 		)
