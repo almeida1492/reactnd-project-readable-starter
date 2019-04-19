@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import Post from './Post.js'
 import PostList from './PostList.js'
-import { getPost, getComments } from '../helpers/api.js'
+import { getPostAPI, getAllCommentsAPI } from '../helpers/api.js'
 
 class PostDetails extends Component{
 	state = {
@@ -13,8 +13,8 @@ class PostDetails extends Component{
 	componentDidMount(){
 		const { params } = this.props
 
-		getPost(params.id).then((post) => 
-			getComments(params.id).then((comments) => 
+		getPostAPI(params.id).then((post) => 
+			getAllCommentsAPI(params.id).then((comments) => 
 				this.setState({ post, comments })))
 	}
 

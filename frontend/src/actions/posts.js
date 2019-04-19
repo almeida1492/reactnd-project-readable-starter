@@ -1,18 +1,33 @@
-import { getAll, add } from '../api-server/posts.js'
+import { getAllPostsAPI, getPostAPI, savePostAPI, voteOnPostAPI } from '../helpers/api.js'
 
-export const ADD_POST = 'ADD_POST'
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
+export const RECEIVE_POST = 'RECEIVE_POST'
+export const ADD_POST = 'ADD_POST'
+export const VOTE_ON_POST = 'VOTE_ON_POST'
 
-function receivePosts(posts){
+export function receivePosts(posts){
 	return {
 		type: RECEIVE_POSTS,
 		posts,
 	}
 }
 
-export function receivePostsThunk(token){
+export function receivePostsThunk(){
 	return (dispatch) => {
-		return getAll(token).then((posts) => dispatch(receivePosts(posts)))
+		return getAllPostsAPI().then((posts) => dispatch(receivePosts(posts)))
+	}
+}
+
+function receivePost(post){
+	return {
+		type: RECEIVE_POST,
+		post,
+	}
+}
+
+export function receivePostThunk(id){
+	return (dispatch) => {
+		return getPostAPI(id).then((post) => dispatch(receivePost(post)))
 	}
 }
 
@@ -23,9 +38,21 @@ function addPost(post){
 	}
 }
 
-//addPost thunk
 export function addPostThunk(newPost){
 	return (dispatch) => {
-		return add(token, newPost).then((post) => dispatch(addPost(post)))
+		return savePostAPI(newPost).then((post) => dispatch(addPost(post)))
+	}
+}
+
+function voteOnPost(post){
+	return {
+		type: VOTE_ON_POST,
+		post,
+	}
+}
+
+export function voteOnPostThunk(data, vote){
+	return (dispatch) => {
+		return voteOnPostAPI(data, vote).then((post) => dispatch(voteOnPost(post)))
 	}
 }

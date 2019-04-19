@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 import Post from './Post.js'
 
@@ -18,4 +19,10 @@ class PostList extends Component{
 	}
 }
 
-export default PostList;
+function mapStateToProps ({ posts }){
+  return {
+    posts
+  }
+}
+
+export default connect(mapStateToProps)(PostList);

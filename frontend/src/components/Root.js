@@ -7,7 +7,7 @@ import PostList from './PostList.js'
 class Root extends Component{
 
 	render(){
-		const { categories, posts, filter } = this.props
+		const { categories, filter } = this.props
 		return(
 			<div className='Root'>
 				<h1>Readable</h1>
@@ -23,7 +23,7 @@ class Root extends Component{
 					</ul>
 				</div>
 				<p>Posts</p>
-				<PostList posts={posts} handleVote={this.handlePostVoting}/>
+				<PostList handleVote={this.handlePostVoting}/>
 				<Link to={`/new`}>
 					<button className='add-btn'>Add</button>
 				</Link>

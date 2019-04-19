@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { formatDate } from '../helpers/formatDate.js'
 
-import { votePost } from '../helpers/api.js'
+import { voteOnPostAPI } from '../helpers/api.js'
 
 class Post extends Component{
 	state = {
@@ -11,7 +11,7 @@ class Post extends Component{
 
 	handleVote(vote){
 		const { data } = this.props
-		votePost(data, vote).then((post) => this.setState({ voteScore: post.voteScore }))
+		voteOnPostAPI(data, vote).then((post) => this.setState({ voteScore: post.voteScore }))
 	}
 
 	render(){
@@ -23,7 +23,7 @@ class Post extends Component{
 					<div>
 						<p className='post-title'>{data.title}</p>
 						<p className='post-body'>{data.body}</p>
-						<p className='post-info'>{`${data.author}, ${data.category}, ${formatDate(data.timestamp)}`}</p>
+						<p className='post-info'>{`${data.author} • ${data.category} • ${formatDate(data.timestamp)}`}</p>
 					</div>
 				</Link>
 				<div className='post-votes'>

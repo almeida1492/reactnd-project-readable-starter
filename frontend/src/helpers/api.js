@@ -10,32 +10,32 @@ const headers = {
   'Authorization': token
 }
 
-export const getCategories = () =>
+export const getCategoriesAPI = () =>
   fetch(`${api}/categories`, { headers })
     .then((res) => res.json())
     .then((data) => data.categories)
 
-export const getAll = () =>
+export const getAllPostsAPI = () =>
   fetch(`${api}/posts`, { headers })
     .then((res) => res.json())
     .then((posts) => posts)
 
-export const getCategoryPosts = (category) =>
+export const getCategoryPostsAPI = (category) =>
   fetch(`${api}/${category}/posts`, { headers })
     .then((res) => res.json())
     .then((posts) => posts)
 
-export const getPost = (id) =>
+export const getPostAPI = (id) =>
   fetch(`${api}/posts/${id}`, { headers })
     .then((res) => res.json())
     .then((post) => post)
 
-export const getComments = (id) =>
+export const getAllCommentsAPI = (id) =>
   fetch(`${api}/posts/${id}/comments`, { headers })
     .then((res) => res.json())
     .then((comments) => comments)
 
-export const savePost = (post) =>
+export const savePostAPI = (post) =>
   fetch(`${api}/posts`, { 
     method: 'POST',
     headers: {
@@ -45,7 +45,7 @@ export const savePost = (post) =>
     body: JSON.stringify(post)
   }).then(res => res.json())
 
-export const votePost = (post, vote) =>
+export const voteOnPostAPI = (post, vote) =>
   fetch(`${api}/posts/${post.id}`, { 
     method: 'POST',
     headers: {

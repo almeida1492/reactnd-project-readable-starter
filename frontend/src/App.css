@@ -153,6 +153,7 @@ a {
   margin-right: 50px;
   margin-top: 50px;
   border-radius: 30px;
+  cursor: pointer;
 }
 
 .App-header {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import uuid from 'uuid';
 
-import { savePost } from '../helpers/api.js'
+import { savePostAPI } from '../helpers/api.js'
 
 class NewPost extends Component{
 	state = {
@@ -50,7 +50,7 @@ class NewPost extends Component{
 	    // dispatch(handleAddTweet(text, id))
 
 
-	    savePost(newPost).then(this.setState({ 
+	    savePostAPI(newPost).then(this.setState({ 
 	    	author: '',
 			title: '',
 			body: '',
