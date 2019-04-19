@@ -64,7 +64,7 @@ class App extends Component {
 
 function mapStateToProps ({ posts }){
   return {
-    posts
+    posts: []
   }
 }
 

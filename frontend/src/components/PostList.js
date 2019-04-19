@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { objectToArray } from '../helpers/objectToArray.js'
 
 import Post from './Post.js'
 
@@ -21,7 +22,7 @@ class PostList extends Component{
 
 function mapStateToProps ({ posts }){
   return {
-    posts
+    posts: objectToArray(posts)
   }
 }
 

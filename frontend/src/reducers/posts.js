@@ -1,7 +1,7 @@
 import { RECEIVE_POSTS, RECEIVE_POST, ADD_POST, VOTE_ON_POST } from '../actions/posts.js'
 
 export default function posts (state = {}, action){
-	console.log(action)
+
 	switch(action.type){
 		case RECEIVE_POSTS :
 			return {
