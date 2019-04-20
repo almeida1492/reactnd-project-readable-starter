@@ -8,13 +8,7 @@ import NewPost from './NewPost.js'
 import { init } from '../actions/init.js'
 import { objectToArray } from '../helpers/objectToArray.js'
 
-import { getAllPostsAPI, getCategoryPostsAPI } from '../helpers/api.js'
-
 class App extends Component {
-  constructor(props){
-    super(props)
-    this.filterByCategory = this.filterByCategory.bind(this);
-  }
 
   componentDidMount(){
     this.props.dispatch(init())
@@ -23,12 +17,6 @@ class App extends Component {
   getCategoryPaths(){
     const { categories } = this.props
     return categories.map((category) => `/${category.name}`)
-  }
-
-  filterByCategory(category){
-    category === 'all' 
-      ? getAllPostsAPI().then((posts) => this.setState(() => ({ posts: posts })))
-      : getCategoryPostsAPI(category).then((posts) => this.setState(() => ({ posts: posts })))
   }
 
   render() {
@@ -42,7 +30,7 @@ class App extends Component {
               : <div>
                   <Route exact path='/' render={() => <Redirect to='/all'/>}/>
                   <Route exact path={this.getCategoryPaths()} render={() => (
-                    <Root filter={this.filterByCategory}/>
+                    <Root/>
                   )}/>
                   <Route exact path='/post-details/:id' render={(query) => (
                     <PostDetails params={query.match.params}/>

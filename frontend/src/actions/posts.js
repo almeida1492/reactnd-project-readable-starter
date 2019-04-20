@@ -1,9 +1,10 @@
-import { getAllPostsAPI, getPostAPI, savePostAPI, voteOnPostAPI } from '../helpers/api.js'
+import { getAllPostsAPI, getPostAPI, savePostAPI, voteOnPostAPI, getPostsByCategoryAPI } from '../helpers/api.js'
 
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 export const RECEIVE_POST = 'RECEIVE_POST'
 export const ADD_POST = 'ADD_POST'
 export const VOTE_ON_POST = 'VOTE_ON_POST'
+export const GET_POSTS_BY_CATEGORY = 'GET_POSTS_BY_CATEGORY'
 
 export function receivePosts(posts){
 	return {
@@ -54,5 +55,18 @@ function voteOnPost(post){
 export function voteOnPostThunk(data, vote){
 	return (dispatch) => {
 		return voteOnPostAPI(data, vote).then((post) => dispatch(voteOnPost(post)))
+	}
+}
+
+function getPostsByCategory(posts){
+	return {
+		type: GET_POSTS_BY_CATEGORY,
+		posts,
+	}
+}
+
+export function getPostsByCategoryThunk(category){
+	return (dispatch) => {	
+		return getPostsByCategoryAPI(category).then((posts) => dispatch(getPostsByCategory(posts)))
 	}
 }

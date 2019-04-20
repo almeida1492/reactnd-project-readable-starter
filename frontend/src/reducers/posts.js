@@ -1,4 +1,4 @@
-import { RECEIVE_POSTS, RECEIVE_POST, ADD_POST, VOTE_ON_POST } from '../actions/posts.js'
+import { RECEIVE_POSTS, RECEIVE_POST, ADD_POST, VOTE_ON_POST, GET_POSTS_BY_CATEGORY } from '../actions/posts.js'
 
 export default function posts (state = {}, action){
 
@@ -20,6 +20,10 @@ export default function posts (state = {}, action){
 		case VOTE_ON_POST :
 			return {
 				post: action.post,
+			}
+		case GET_POSTS_BY_CATEGORY :
+			return {
+				...action.posts,
 			}
 		default :
 			return state
