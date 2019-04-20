@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import uuid from 'uuid';
-
+import { objectToArray } from '../helpers/objectToArray.js'
+import { connect } from 'react-redux'
 import { savePostAPI } from '../helpers/api.js'
 
 class NewPost extends Component{
@@ -44,11 +45,6 @@ class NewPost extends Component{
 	    	author,
 	    	category
 	    }
-
-	    // const { dispatch, id } = this.props
-
-	    // dispatch(handleAddTweet(text, id))
-
 
 	    savePostAPI(newPost).then(this.setState({ 
 	    	author: '',
@@ -106,4 +102,10 @@ class NewPost extends Component{
 	}
 }
 
-export default NewPost;
+function mapStateToProps({ categories }){
+  return {
+    categories: objectToArray(categories),
+  }
+}
+
+export default connect(mapStateToProps)(NewPost);
