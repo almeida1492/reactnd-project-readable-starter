@@ -1,7 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { objectToArray } from '../helpers/objectToArray.js'
-
 import Post from './Post.js'
 
 class PostList extends Component{
@@ -20,10 +17,4 @@ class PostList extends Component{
 	}
 }
 
-function mapStateToProps ({ posts }){
-  return {
-    posts: objectToArray(posts)
-  }
-}
-
-export default connect(mapStateToProps)(PostList);
+export default PostList;

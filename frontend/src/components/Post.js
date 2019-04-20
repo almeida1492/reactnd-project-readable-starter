@@ -17,6 +17,7 @@ class Post extends Component{
 	render(){
 		const { data } = this.props 
 		const { voteScore } = this.state
+		
 		return(
 			<div className='Post'>
 				<Link to={`/post-details/${data.id}`} className='post-center'>

@@ -16,7 +16,7 @@ class Root extends Component{
   	}
 
 	render(){
-		const { categories } = this.props
+		const { categories, posts } = this.props
 		return(
 			<div className='Root'>
 				<h1>Readable</h1>
@@ -32,7 +32,7 @@ class Root extends Component{
 					</ul>
 				</div>
 				<p>Posts</p>
-				<PostList handleVote={this.handlePostVoting}/>
+				<PostList posts={posts} handleVote={this.handlePostVoting}/>
 				<Link to={`/new`}>
 					<button className='add-btn'>Add</button>
 				</Link>
@@ -41,9 +41,10 @@ class Root extends Component{
 	}
 }
 
-function mapStateToProps ({ categories }){
+function mapStateToProps ({ categories, posts }){
   return {
     categories: objectToArray(categories),
+    posts: objectToArray(posts),
   }
 }
 
