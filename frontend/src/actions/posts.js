@@ -7,6 +7,7 @@ export const VOTE_ON_POST = 'VOTE_ON_POST'
 export const GET_POSTS_BY_CATEGORY = 'GET_POSTS_BY_CATEGORY'
 
 export function receivePosts(posts){
+	console.log(posts)
 	return {
 		type: RECEIVE_POSTS,
 		posts,
@@ -15,7 +16,9 @@ export function receivePosts(posts){
 
 export function receivePostsThunk(){
 	return (dispatch) => {
-		return getAllPostsAPI().then((posts) => dispatch(receivePosts(posts)))
+		return getAllPostsAPI().then((posts) => {
+			dispatch(receivePosts(posts))
+		})
 	}
 }
 
@@ -67,6 +70,8 @@ function getPostsByCategory(posts){
 
 export function getPostsByCategoryThunk(category){
 	return (dispatch) => {	
-		return getPostsByCategoryAPI(category).then((posts) => dispatch(getPostsByCategory(posts)))
+		return getPostsByCategoryAPI(category).then((posts) => {
+			dispatch(getPostsByCategory(posts))
+		})
 	}
 }

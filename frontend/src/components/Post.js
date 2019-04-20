@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { formatDate } from '../helpers/formatDate.js'
-
-import { voteOnPostAPI } from '../helpers/api.js'
+import { formatDate } from '../helpers/formatDate'
+import { connect } from 'react-redux'
+import { voteOnPostAPI } from '../helpers/api'
+import { voteOnPostThunk } from '../actions/posts'
 
 class Post extends Component{
 	state = {
@@ -10,14 +11,14 @@ class Post extends Component{
 	}
 
 	handleVote(vote){
-		const { data } = this.props
-		voteOnPostAPI(data, vote).then((post) => this.setState({ voteScore: post.voteScore }))
+		const { data, dispatch } = this.props
+		// voteOnPostAPI(data, vote).then((post) => this.setState({ voteScore: post.voteScore }))
+		dispatch(voteOnPostThunk(data, vote))
 	}
 
 	render(){
 		const { data } = this.props 
 		const { voteScore } = this.state
-		
 		return(
 			<div className='Post'>
 				<Link to={`/post-details/${data.id}`} className='post-center'>
@@ -29,7 +30,7 @@ class Post extends Component{
 				</Link>
 				<div className='post-votes'>
 					<p className='vote-button' onClick={(e) => this.handleVote('upVote')}>+</p>
-					<p>{voteScore === undefined ? data.voteScore : voteScore}</p>
+					<p>{data.voteScore}</p>
 					<p className='vote-button' onClick={(e) => this.handleVote('downVote')}>-</p>
 				</div>
 			</div>
@@ -37,4 +38,4 @@ class Post extends Component{
 	}
 }
 
-export default Post;
+export default connect()(Post);

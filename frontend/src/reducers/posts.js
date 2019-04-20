@@ -18,8 +18,11 @@ export default function posts (state = {}, action){
 				[action.post.id]:  action.post,
 			}
 		case VOTE_ON_POST :
+			const index = Object.keys(state).filter((key) => 
+				state[key].id === action.post.id ? key : null)
 			return {
-				post: action.post,
+				...state,
+				[index]: action.post,
 			}
 		case GET_POSTS_BY_CATEGORY :
 			return {

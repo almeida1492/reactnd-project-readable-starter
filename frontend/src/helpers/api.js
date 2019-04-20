@@ -54,3 +54,4 @@ export const voteOnPostAPI = (post, vote) =>
     },
     body: JSON.stringify({ option: vote })
   }).then(res => res.json())
+    .then((data) => data)

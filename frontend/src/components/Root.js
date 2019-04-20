@@ -25,7 +25,7 @@ class Root extends Component{
 						{categories.map((category) => 
 							<Link to={`/${category.name}`} key={category.name}>
 								<li onClick={() => this.filterByCategory(category.name)}>
-									{category.name} 
+									{category.name}
 								</li>
 							</Link>
 						)}
