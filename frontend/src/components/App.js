@@ -6,8 +6,9 @@ import Root from './Root.js'
 import PostDetails from './PostDetails.js'
 import NewPost from './NewPost.js'
 import { init } from '../actions/init.js'
+import { objectToArray } from '../helpers/objectToArray.js'
 
-import { getAllPostsAPI, getCategoriesAPI, getCategoryPostsAPI } from '../helpers/api.js'
+import { getAllPostsAPI, getCategoryPostsAPI } from '../helpers/api.js'
 
 class App extends Component {
   constructor(props){
@@ -15,21 +16,12 @@ class App extends Component {
     this.filterByCategory = this.filterByCategory.bind(this);
   }
 
-  state = {
-    categories: [ { name: 'all', path: 'all' }, 
-                  { name: 'redux', path: 'redux' }, 
-                  { name: 'react', path: 'react' }, 
-                  { name: 'udacity', path: 'udacity' } ],
-  }
-
   componentDidMount(){
-    // getCategoriesAPI().then((categories) => this.setState(() => ({ categories: categories })))
     this.props.dispatch(init())
-
   }
 
   getCategoryPaths(){
-    const { categories } = this.state
+    const { categories } = this.props
     return categories.map((category) => `/${category.name}`)
   }
 
@@ -40,31 +32,36 @@ class App extends Component {
   }
 
   render() {
-    const { categories } = this.state
-    
     return (      
     	<Router>
         <Fragment>
           <LoadingBar/>
-          <Route exact path='/' render={() => <Redirect to='/all'/>}/>
-          <Route exact path={this.getCategoryPaths()} render={() => (
-            <Root categories={categories} filter={this.filterByCategory}/>
-          )}/>
-          <Route exact path='/post-details/:id' render={(query) => (
-            <PostDetails params={query.match.params}/>
-          )}/>
-          <Route exact path='/new' render={() => (
-            <NewPost categories={categories}/>
-          )}/>
+          <div className='container'>
+            {this.props.loading === true 
+              ? null
+              : <div>
+                  <Route exact path='/' render={() => <Redirect to='/all'/>}/>
+                  <Route exact path={this.getCategoryPaths()} render={() => (
+                    <Root filter={this.filterByCategory}/>
+                  )}/>
+                  <Route exact path='/post-details/:id' render={(query) => (
+                    <PostDetails params={query.match.params}/>
+                  )}/>
+                  <Route exact path='/new' render={() => (
+                    <NewPost/>
+                  )}/>
+                </div>}
+          </div>
         </Fragment>
     	</Router>
     );
   }
 }
 
-function mapStateToProps ({ posts }){
+function mapStateToProps ({ loading, categories }){
   return {
-    posts: []
+    categories: objectToArray(categories),
+    loading,
   }
 }
 

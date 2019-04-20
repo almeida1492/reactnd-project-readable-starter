@@ -1,14 +1,21 @@
 import { receivePosts } from '../actions/posts.js'
-import { getAllPostsAPI } from '../helpers/api.js'
+import { loading } from '../actions/loading.js'
+import { getCategories } from '../actions/categories.js'
+import { getAllPostsAPI, getCategoriesAPI } from '../helpers/api.js'
 
 import { showLoading, hideLoading } from 'react-redux-loading'
 
 export function init () {
   return (dispatch) => {
     dispatch(showLoading())
+    dispatch(loading(true))
     return getAllPostsAPI()
-      .then((posts) => {
-        dispatch(receivePosts(posts))
-        dispatch(hideLoading())})
+    	.then((posts) => getCategoriesAPI()
+    		.then((categories) => {
+    			dispatch(receivePosts(posts))
+    			dispatch(getCategories(categories))
+    			dispatch(hideLoading())
+    			dispatch(loading(false))
+    		}))
   }
 }

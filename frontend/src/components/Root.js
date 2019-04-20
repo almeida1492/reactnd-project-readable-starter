@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 import '../App.css'
+import { objectToArray } from '../helpers/objectToArray.js'
 
 import PostList from './PostList.js'
 
@@ -32,4 +34,10 @@ class Root extends Component{
 	}
 }
 
-export default Root;
+function mapStateToProps ({ categories }){
+  return {
+    categories: objectToArray(categories),
+  }
+}
+
+export default connect(mapStateToProps)(Root);
