@@ -4,6 +4,7 @@ import uuid from 'uuid';
 import { objectToArray } from '../helpers/objectToArray.js'
 import { connect } from 'react-redux'
 import { savePostAPI } from '../helpers/api.js'
+import { addPostThunk } from '../actions/posts'
 
 class NewPost extends Component{
 	state = {
@@ -37,6 +38,7 @@ class NewPost extends Component{
   	handleSubmit = (e) => {
 	    e.preventDefault()
 	    const { author, title, body, category  } = this.state
+	    const { dispatch } = this.props
 	    const newPost = {
 	    	id: uuid.v4(),
 	    	timestamp: Date.now(),
@@ -46,13 +48,23 @@ class NewPost extends Component{
 	    	category
 	    }
 
-	    savePostAPI(newPost).then(this.setState({ 
+	    dispatch(addPostThunk(newPost))
+
+	    this.setState({ 
 	    	author: '',
 			title: '',
 			body: '',
 			category: 'all', 
 			toHome: true,
-	    }))
+	    })
+
+	  //   savePostAPI(newPost).then(this.setState({ 
+	  //   	author: '',
+			// title: '',
+			// body: '',
+			// category: 'all', 
+			// toHome: true,
+	  //   }))
 	}
 
 	render(){
