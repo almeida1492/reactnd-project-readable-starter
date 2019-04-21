@@ -39,6 +39,7 @@ export const savePostAPI = (post) =>
     },
     body: JSON.stringify(post)
   }).then(res => res.json())
+    .then(data => console.log(data))
 
 export const voteOnPostAPI = (post, vote) =>
   fetch(`${api}/posts/${post.id}`, { 
@@ -51,11 +52,32 @@ export const voteOnPostAPI = (post, vote) =>
   }).then(res => res.json())
     .then((data) => data)
 
+export const editPostAPI = (id, post) =>
+  fetch(`${api}/posts/${id}`, { 
+    method: 'PUT',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(post)
+  }).then(res => res.json())
+
+export const deletePostAPI = (id) =>
+  fetch(`${api}/posts/${id}`, { 
+    method: 'DELETE',
+    headers: { ...headers }
+  }).then(res => res.json())
+
 export const getAllCommentsAPI = (id) =>
   fetch(`${api}/posts/${id}/comments`, { headers })
     .then((res) => res.json())
     .then((comments) => comments)
     .catch((error) => console.log(error))
+
+export const getCommentAPI = (id) =>
+  fetch(`${api}/comments/${id}`, { headers })
+    .then((res) => res.json())
+    .then((comment) => comment)
 
 export const saveCommentAPI = (comment) =>
   fetch(`${api}/comments`, { 
@@ -78,3 +100,19 @@ export const voteOnCommentAPI = (comment, vote) =>
   }).then(res => res.json())
     .then((data) => data)
     .catch((error) => console.log(error))
+
+export const editCommentAPI = (id, comment) =>
+  fetch(`${api}/comments/${id}`, { 
+    method: 'PUT',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(comment)
+  }).then(res => res.json())
+
+export const deleteCommentAPI = (id) =>
+  fetch(`${api}/comments/${id}`, { 
+    method: 'DELETE',
+    headers: { ...headers }
+  }).then(res => res.json())

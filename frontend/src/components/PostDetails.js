@@ -5,6 +5,7 @@ import PostList from './PostList.js'
 import { getAllCommentsThunk, cleanCommentsArray, addCommentThunk, voteOnCommentThunk } from '../actions/comments'
 import { voteOnPostThunk } from '../actions/posts'
 import { objectToArray } from '../helpers/objectToArray.js'
+import { getPostAPI } from '../helpers/api'
 import uuid from 'uuid';
 
 class PostDetails extends Component{
@@ -17,21 +18,13 @@ class PostDetails extends Component{
 	state = {
 		author: '',
 		body: '',
+		post: {},
 	}
 
 	componentDidMount(){
 		const { params, dispatch } = this.props
 		dispatch(getAllCommentsThunk(params.id))
-	}
-
-	componentWillUnmount(){
-		const { dispatch } = this.props
-		dispatch(cleanCommentsArray())
-	}
-
-	getPost(){
-		const { params, posts } = this.props
-		return posts.filter((post) => post.id === params.id)
+		getPostAPI(params.id).then((post) => this.setState({ post }))
 	}
 
 	handleAuthorChange = (e) => {
@@ -57,10 +50,10 @@ class PostDetails extends Component{
   	handleSubmit = (e) => {
 	    e.preventDefault()
 	    const { author, body } = this.state
-	    const { dispatch } = this.props
+	    const { dispatch, params } = this.props
 	    const newComment = {
 	    	timestamp: Date.now(),
-	    	parentId: this.getPost()[0].id,
+	    	parentId: this.state.post.id,
 	    	id: uuid.v4(),
 	    	body,
 	    	author,
@@ -76,14 +69,13 @@ class PostDetails extends Component{
 
 	render(){
 		const { comments } = this.props
-		const data = this.getPost()[0]
-		const { body, author } = this.state
+		const { body, author, post } = this.state
 		return(
 			<div className='PostDetails'>
 				<h3>Post details</h3>
-				<Post data={data} handleVoting={this.handlePostVoting}/>
+				<Post data={post} handleVoting={this.handlePostVoting} postType='post'/>
 				<h4>{comments.length === 0 ? 'There are no comments yet!' : 'Comments'}</h4>
-				<PostList posts={comments} handleVoting={this.handleCommentVoting}/>
+				<PostList posts={comments} handleVoting={this.handleCommentVoting} postType='comment'/>
 				<form className='new-post-form' onSubmit={this.handleSubmit}>
 					<textarea
 						placeholder='Author...'
@@ -109,9 +101,8 @@ class PostDetails extends Component{
 	}
 }
 
-function mapStateToProps({ posts, comments }){
+function mapStateToProps({ comments }){
 	return {
-		posts: objectToArray(posts),
 		comments: objectToArray(comments),
 	}
 }

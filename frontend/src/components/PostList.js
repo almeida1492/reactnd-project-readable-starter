@@ -33,7 +33,7 @@ class PostList extends Component{
 	}
 
 	render(){
-		const { handleVoting } = this.props
+		const { handleVoting, postType } = this.props
 		const sortedPosts = this.getSortedPosts()
 		return(
 			<div>
@@ -48,7 +48,7 @@ class PostList extends Component{
 				<ul className='PostList'>
 					{sortedPosts.map((post) => (
 						<li key={post.id}>
-							<Post data={post} handleVoting={handleVoting}/>
+							<Post data={post} handleVoting={handleVoting} postType={postType}/>
 						</li>
 					))}
 				</ul>

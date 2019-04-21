@@ -4,12 +4,18 @@ import { connect } from 'react-redux'
 import '../App.css'
 import { objectToArray } from '../helpers/objectToArray.js'
 import { receivePostsThunk, getPostsByCategoryThunk, voteOnPostThunk } from '../actions/posts'
+import { cleanCommentsArray } from '../actions/comments'
 import PostList from './PostList.js'
 
 class Root extends Component{
 	constructor(props){
 		super(props);
 		this.handlePostVoting = this.handlePostVoting.bind(this);
+	}
+
+	componentDidMount(){
+		this.props.dispatch(cleanCommentsArray())
+		this.props.dispatch(receivePostsThunk())
 	}
 
 	filterByCategory(category){
@@ -41,7 +47,7 @@ class Root extends Component{
 					</ul>
 				</div>
 				<p>Posts</p>
-				<PostList posts={posts} handleVoting={this.handlePostVoting}/>
+				<PostList posts={posts} handleVoting={this.handlePostVoting} postType='post'/>
 				<Link to={`/new`}>
 					<button className='add-btn'>Add</button>
 				</Link>

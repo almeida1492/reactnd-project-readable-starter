@@ -14,7 +14,7 @@
   list-style: none;
   text-align: right;
   padding-left: 0px;
-  padding-right: 15%;
+  padding-right: 20%;
 }
 
 .filter li{
@@ -144,7 +144,7 @@ a {
 
 .post-body {
   font-size: 15px;
-  min-height: 50px;
+  min-height: 100px;
 }
 
 .post-info {
@@ -152,11 +152,27 @@ a {
   font-size: 12px;
 }
 
-.post-votes {
+.post-right {
   text-align: center;
   width: 15%;
   display: flex;
   flex-direction: column;
+}
+
+.post-votes{
+  height: 90%;
+}
+
+.post-buttons-container {
+  display: flex;
+  flex-direction: line;
+  height: 10%;
+}
+
+.post-button {
+  width: 22px;
+  height: 22px;
+  margin: 10px
 }
 
 .vote-button {

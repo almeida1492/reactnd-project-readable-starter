@@ -3,9 +3,11 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading'
 import Root from './Root.js'
-import PostDetails from './PostDetails.js'
-import NewPost from './NewPost.js'
-import { init } from '../actions/init.js'
+import PostDetails from './PostDetails'
+import NewPost from './NewPost'
+import EditPost from './EditPost'
+import EditComment from './EditComment'
+import { init } from '../actions/init'
 import { objectToArray } from '../helpers/objectToArray.js'
 
 class App extends Component {
@@ -34,8 +36,14 @@ class App extends Component {
                   <Route exact path='/post-details/:id' render={(query) => (
                     <PostDetails params={query.match.params}/>
                   )}/>
-                  <Route exact path='/new' render={() => (
+                  <Route path='/new' render={() => (
                     <NewPost/>
+                  )}/>
+                  <Route path='/edit-post/:id' render={(query) => (
+                    <EditPost params={query.match.params}/>
+                  )}/>
+                  <Route path='/edit-comment/:id' render={(query) => (
+                    <EditComment params={query.match.params}/>
                   )}/>
                 </div>}
           </div>

@@ -63,12 +63,12 @@ class NewPost extends Component{
 		const { categories } = this.props
 
 		if (toHome === true) {
-			return <Redirect to='/all' />
+			return <Redirect to='/' />
 	    }
 
 		return(
 			<div className='new-post'>
-				<h3>New Post</h3>
+				<h3>Compose Post</h3>
 				<form className='new-post-form' onSubmit={this.handleSubmit}>
 					<textarea
 						placeholder='Author...'

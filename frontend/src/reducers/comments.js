@@ -1,6 +1,7 @@
-import { GET_COMMENTS, CLEAN_COMMENTS_ARRAY, ADD_COMMENT, VOTE_ON_COMMENT } from '../actions/comments'
+import { GET_COMMENTS, CLEAN_COMMENTS_ARRAY, ADD_COMMENT, VOTE_ON_COMMENT, EDIT_COMMENT, DELETE_COMMENT } from '../actions/comments'
 
 export default function comments(state = {}, action){
+	let index = ''
 	switch(action.type){
 		case GET_COMMENTS :
 			return {
@@ -17,11 +18,23 @@ export default function comments(state = {}, action){
 				[action.comment.id]: action.comment,
 			}
 		case VOTE_ON_COMMENT :
-			const index = Object.keys(state).filter((key) => 
+			index = Object.keys(state).filter((key) => 
 				state[key].id === action.comment.id ? key : null)
 			return {
 				...state,
 				[index]: action.comment
+			}
+		case EDIT_COMMENT :
+			index = Object.keys(state).filter((key) => 
+				state[key].id === action.comment.id ? key : null)
+			return {
+				...state,
+				[index]: action.comment
+			}
+		case DELETE_COMMENT :
+			Object.keys(state).forEach((key) => key === action.comment.id ? delete state[key] : null)
+			return {
+				...state,
 			}
 		default :
 			return state
