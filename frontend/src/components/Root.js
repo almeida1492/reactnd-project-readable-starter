@@ -31,8 +31,8 @@ class Root extends Component{
 				<h1>Readable</h1>
 				<div id='menu'>
 					<ul>
-						{categories.map((category) => 
-							<Link to={`/${category.name}`} key={category.name}>
+						{categories.map((category) =>
+							<Link to={`/${category.name === 'all' ? '' : category.name}`} key={category.name}>
 								<li onClick={() => this.filterByCategory(category.name)}>
 									{category.name}
 								</li>

@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading'
 import Root from './Root.js'
@@ -16,7 +16,7 @@ class App extends Component {
 
   getCategoryPaths(){
     const { categories } = this.props
-    return categories.map((category) => `/${category.name}`)
+    return categories.map((category) => `/${category.name === 'all' ? '' : category.name}`)
   }
 
   render() {
@@ -28,7 +28,6 @@ class App extends Component {
             {this.props.loading === true 
               ? null
               : <div>
-                  <Route exact path='/' render={() => <Redirect to='/all'/>}/>
                   <Route exact path={this.getCategoryPaths()} render={() => (
                     <Root/>
                   )}/>
