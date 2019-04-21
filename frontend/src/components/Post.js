@@ -2,36 +2,40 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { formatDate } from '../helpers/formatDate'
 import { connect } from 'react-redux'
-import { voteOnPostAPI } from '../helpers/api'
-import { voteOnPostThunk } from '../actions/posts'
 
 class Post extends Component{
-	state = {
-		voteScore: undefined,
-	}
 
-	handleVote(vote){
-		const { data, dispatch } = this.props
-		// voteOnPostAPI(data, vote).then((post) => this.setState({ voteScore: post.voteScore }))
-		dispatch(voteOnPostThunk(data, vote))
+	getFormatInfo(info){
+		return ` • ${info}`
 	}
 
 	render(){
-		const { data } = this.props 
-		const { voteScore } = this.state
+		const { data, handleVoting } = this.props 
 		return(
 			<div className='Post'>
 				<Link to={`/post-details/${data.id}`} className='post-center'>
 					<div>
 						<p className='post-title'>{data.title}</p>
 						<p className='post-body'>{data.body}</p>
-						<p className='post-info'>{`${data.author} • ${data.category} • ${formatDate(data.timestamp)}`}</p>
+						<p className='post-info'>{
+							`${data.author} 
+							${data.category === undefined 
+								? '' 
+								: this.getFormatInfo(data.category)}
+							${this.getFormatInfo(formatDate(data.timestamp))}`
+						}
+						</p>
+						<p className='post-info'>
+							{data.commentCount === undefined 
+								? '' 
+								: data.commentCount + ' comments'}
+						</p>
 					</div>
 				</Link>
 				<div className='post-votes'>
-					<p className='vote-button' onClick={(e) => this.handleVote('upVote')}>+</p>
+					<p className='vote-button' onClick={(e) => handleVoting(data, 'upVote')}>+</p>
 					<p>{data.voteScore}</p>
-					<p className='vote-button' onClick={(e) => this.handleVote('downVote')}>-</p>
+					<p className='vote-button' onClick={(e) => handleVoting(data, 'downVote')}>-</p>
 				</div>
 			</div>
 		)

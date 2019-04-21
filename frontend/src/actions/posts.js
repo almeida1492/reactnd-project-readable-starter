@@ -7,7 +7,6 @@ export const VOTE_ON_POST = 'VOTE_ON_POST'
 export const GET_POSTS_BY_CATEGORY = 'GET_POSTS_BY_CATEGORY'
 
 export function receivePosts(posts){
-	console.log(posts)
 	return {
 		type: RECEIVE_POSTS,
 		posts,

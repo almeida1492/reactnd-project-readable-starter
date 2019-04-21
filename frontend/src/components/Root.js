@@ -3,10 +3,14 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import '../App.css'
 import { objectToArray } from '../helpers/objectToArray.js'
-import { receivePostsThunk, getPostsByCategoryThunk } from '../actions/posts'
+import { receivePostsThunk, getPostsByCategoryThunk, voteOnPostThunk } from '../actions/posts'
 import PostList from './PostList.js'
 
 class Root extends Component{
+	constructor(props){
+		super(props);
+		this.handlePostVoting = this.handlePostVoting.bind(this);
+	}
 
 	filterByCategory(category){
 		const { dispatch } = this.props
@@ -14,6 +18,11 @@ class Root extends Component{
 	      ? dispatch(receivePostsThunk())
 	      : dispatch(getPostsByCategoryThunk(category))
   	}
+
+  	handlePostVoting(data, vote){
+		const { dispatch } = this.props
+		dispatch(voteOnPostThunk(data, vote))
+	}
 
 	render(){
 		const { categories, posts } = this.props
@@ -32,7 +41,7 @@ class Root extends Component{
 					</ul>
 				</div>
 				<p>Posts</p>
-				<PostList posts={posts} handleVote={this.handlePostVoting}/>
+				<PostList posts={posts} handleVoting={this.handlePostVoting}/>
 				<Link to={`/new`}>
 					<button className='add-btn'>Add</button>
 				</Link>

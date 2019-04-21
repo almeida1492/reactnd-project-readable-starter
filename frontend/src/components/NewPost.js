@@ -3,7 +3,6 @@ import { Redirect } from 'react-router-dom';
 import uuid from 'uuid';
 import { objectToArray } from '../helpers/objectToArray.js'
 import { connect } from 'react-redux'
-import { savePostAPI } from '../helpers/api.js'
 import { addPostThunk } from '../actions/posts'
 
 class NewPost extends Component{
@@ -57,14 +56,6 @@ class NewPost extends Component{
 			category: 'all', 
 			toHome: true,
 	    })
-
-	  //   savePostAPI(newPost).then(this.setState({ 
-	  //   	author: '',
-			// title: '',
-			// body: '',
-			// category: 'all', 
-			// toHome: true,
-	  //   }))
 	}
 
 	render(){

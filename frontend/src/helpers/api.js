@@ -30,11 +30,6 @@ export const getPostAPI = (id) =>
     .then((res) => res.json())
     .then((post) => post)
 
-export const getAllCommentsAPI = (id) =>
-  fetch(`${api}/posts/${id}/comments`, { headers })
-    .then((res) => res.json())
-    .then((comments) => comments)
-
 export const savePostAPI = (post) =>
   fetch(`${api}/posts`, { 
     method: 'POST',
@@ -55,3 +50,31 @@ export const voteOnPostAPI = (post, vote) =>
     body: JSON.stringify({ option: vote })
   }).then(res => res.json())
     .then((data) => data)
+
+export const getAllCommentsAPI = (id) =>
+  fetch(`${api}/posts/${id}/comments`, { headers })
+    .then((res) => res.json())
+    .then((comments) => comments)
+    .catch((error) => console.log(error))
+
+export const saveCommentAPI = (comment) =>
+  fetch(`${api}/comments`, { 
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(comment)
+  }).then(res => res.json())
+
+export const voteOnCommentAPI = (comment, vote) =>
+  fetch(`${api}/comments/${comment.id}`, { 
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ option: vote })
+  }).then(res => res.json())
+    .then((data) => data)
+    .catch((error) => console.log(error))

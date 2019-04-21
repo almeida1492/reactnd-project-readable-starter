@@ -10,6 +10,21 @@
   padding: 10px;
 }
 
+.filter ul{
+  list-style: none;
+  text-align: right;
+  padding-left: 0px;
+  padding-right: 15%;
+}
+
+.filter li{
+  display: inline;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
 #menu ul{
   list-style: none;
   padding-left: 0px;
