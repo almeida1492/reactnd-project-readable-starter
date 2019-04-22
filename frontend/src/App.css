@@ -187,7 +187,7 @@ a {
   bottom: 0;
   right: 0;
   top: 0;
-  margin-right: 50px;
+  margin-right: 200px;
   margin-top: 50px;
   border-radius: 30px;
   cursor: pointer;
@@ -202,4 +202,9 @@ a {
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.disable-link {
+  pointer-events: none;
+  cursor: text;
 }

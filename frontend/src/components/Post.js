@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { formatDate } from '../helpers/formatDate'
 import { connect } from 'react-redux'
 import { deletePostThunk } from '../actions/posts'
@@ -9,43 +9,67 @@ class Post extends Component{
 	constructor(props){
 		super(props)
 		this.deletePost = this.deletePost.bind(this)
+		this.isClickable = this.isClickable.bind(this)
 	}
 
 	deletePost(){
-		const { dispatch, data, postType } = this.props
+		const { dispatch, data, postType, location } = this.props
 
-		postType === 'post' 
-			? dispatch(deletePostThunk(data.id))
-			: dispatch(deleteCommentThunk(data.id))	
+		switch (postType){
+			case 'post' :
+				if (location.pathname === `/post-details/${data.id}`) {
+					this.props.history.push('/')
+				}
+				return dispatch(deletePostThunk(data.id))
+			case 'comment' :
+			 	return dispatch(deleteCommentThunk(data))
+			default : 
+		}
 	}
 
 	getFormatInfo(info){
 		return ` • ${info}`
 	}
 
+	isClickable(){
+		const { pathname } = this.props.location
+		const { postType, data } = this.props
+		
+		if (postType === 'comment') {
+			return false
+		}
+		if (pathname === `/post-details/${data.id}`) {
+			return false
+		}
+		return true
+	}
+
 	render(){
 		const { data, handleVoting } = this.props 
 		return(
 			<div className='Post'>
-				<Link to={`/post-details/${data.id}`} className='post-center'>
-					<div>
-						<p className='post-title'>{data.title}</p>
-						<p className='post-body'>{data.body}</p>
-						<p className='post-info'>{
-							`${data.author} 
-							${data.category === undefined 
-								? '' 
-								: this.getFormatInfo(data.category)}
-							${this.getFormatInfo(formatDate(data.timestamp))}`
-						}
-						</p>
-						<p className='post-info'>
-							{data.commentCount === undefined 
-								? '' 
-								: data.commentCount + ' comments'}
-						</p>
-					</div>
-				</Link>
+				<div className='post-center'>
+					<Link to={`/post-details/${data.id}`} className={this.isClickable() ? '' : 'disable-link'}>
+						<div>
+							<p className='post-title'>{data.title}</p>
+							<p className='post-body'>{data.body}</p>
+							<p className='post-info'>{
+								`${data.author} 
+								${data.category === undefined 
+									? '' 
+									: this.getFormatInfo(data.category)}
+								${this.getFormatInfo(formatDate(data.timestamp))}`
+							}
+							</p>
+							<p className='post-info'>
+								{data.commentCount === undefined 
+									? '' 
+									: data.commentCount + ' comments'}
+							</p>
+						</div>
+					</Link>
+				</div>
+				
 				<div className='post-right'>
 					<div className='post-votes'>
 						<p className='vote-button' onClick={(e) => handleVoting(data, 'upVote')}>+</p>
@@ -71,4 +95,4 @@ class Post extends Component{
 	}
 }
 
-export default connect()(Post);
+export default withRouter(connect()(Post));

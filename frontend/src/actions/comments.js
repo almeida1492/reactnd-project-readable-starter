@@ -1,4 +1,5 @@
 import { getAllCommentsAPI, saveCommentAPI, voteOnCommentAPI, editCommentAPI, deleteCommentAPI } from '../helpers/api'
+import { getPostThunk } from '../actions/postInEvidence'
 import { formatElements } from '../helpers/formatElements'
 
 export const GET_COMMENTS = 'GET_COMMENTS'
@@ -75,8 +76,10 @@ function deleteComment(comment){
 	}
 }
 
-export function deleteCommentThunk(id){
+export function deleteCommentThunk(data){
 	return (dispatch) => {
-		return deleteCommentAPI(id).then((comment) => dispatch(deleteComment(comment)))
+		return deleteCommentAPI(data.id)
+			.then((comment) => dispatch(deleteComment(comment)))
+			.then(() => dispatch(getPostThunk(data.parentId)))
 	}
 }

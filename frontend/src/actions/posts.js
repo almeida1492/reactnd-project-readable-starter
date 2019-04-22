@@ -7,7 +7,6 @@ import {
 	editPostAPI,
 	deletePostAPI 
 } from '../helpers/api.js'
-
 import { formatElements } from '../helpers/formatElements'
 
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'

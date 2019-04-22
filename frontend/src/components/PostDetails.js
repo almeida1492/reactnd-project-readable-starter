@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Post from './Post.js'
 import PostList from './PostList.js'
-import { getAllCommentsThunk, cleanCommentsArray, addCommentThunk, voteOnCommentThunk } from '../actions/comments'
+import { getAllCommentsThunk, addCommentThunk, voteOnCommentThunk } from '../actions/comments'
 import { voteOnPostThunk } from '../actions/posts'
+import { getPostThunk } from '../actions/postInEvidence'
 import { objectToArray } from '../helpers/objectToArray.js'
-import { getPostAPI } from '../helpers/api'
 import uuid from 'uuid';
 
 class PostDetails extends Component{
@@ -18,13 +18,12 @@ class PostDetails extends Component{
 	state = {
 		author: '',
 		body: '',
-		post: {},
 	}
 
 	componentDidMount(){
 		const { params, dispatch } = this.props
+		dispatch(getPostThunk(params.id))
 		dispatch(getAllCommentsThunk(params.id))
-		getPostAPI(params.id).then((post) => this.setState({ post }))
 	}
 
 	handleAuthorChange = (e) => {
@@ -50,16 +49,17 @@ class PostDetails extends Component{
   	handleSubmit = (e) => {
 	    e.preventDefault()
 	    const { author, body } = this.state
-	    const { dispatch, params } = this.props
+	    const { dispatch, params, postInEvidence } = this.props
 	    const newComment = {
 	    	timestamp: Date.now(),
-	    	parentId: this.state.post.id,
+	    	parentId: postInEvidence.id,
 	    	id: uuid.v4(),
 	    	body,
 	    	author,
 	    }
 
 	    dispatch(addCommentThunk(newComment))
+	    dispatch(getPostThunk(params.id))
 
 	    this.setState({ 
 	    	author: '',
@@ -68,14 +68,17 @@ class PostDetails extends Component{
 	}
 
 	render(){
-		const { comments } = this.props
-		const { body, author, post } = this.state
+		const { postInEvidence, comments } = this.props
+		const { body, author } = this.state
 		return(
 			<div className='PostDetails'>
 				<h3>Post details</h3>
-				<Post data={post} handleVoting={this.handlePostVoting} postType='post'/>
+				<Post data={postInEvidence} handleVoting={this.handlePostVoting} postType='post'/>
 				<h4>{comments.length === 0 ? 'There are no comments yet!' : 'Comments'}</h4>
-				<PostList posts={comments} handleVoting={this.handleCommentVoting} postType='comment'/>
+				<PostList 
+					posts={comments} 
+					handleVoting={this.handleCommentVoting} 
+					postType='comment'/>
 				<form className='new-post-form' onSubmit={this.handleSubmit}>
 					<textarea
 						placeholder='Author...'
@@ -101,8 +104,9 @@ class PostDetails extends Component{
 	}
 }
 
-function mapStateToProps({ comments }){
+function mapStateToProps({ postInEvidence, comments }){
 	return {
+		postInEvidence,
 		comments: objectToArray(comments),
 	}
 }

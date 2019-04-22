@@ -39,7 +39,6 @@ export const savePostAPI = (post) =>
     },
     body: JSON.stringify(post)
   }).then(res => res.json())
-    .then(data => console.log(data))
 
 export const voteOnPostAPI = (post, vote) =>
   fetch(`${api}/posts/${post.id}`, { 
