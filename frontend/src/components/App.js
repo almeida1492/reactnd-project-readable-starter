@@ -39,10 +39,10 @@ class App extends Component {
                   <Route path='/new' render={() => (
                     <NewPost/>
                   )}/>
-                  <Route path='/edit-post/:id' render={(query) => (
+                  <Route path='/edit-post/:category/:id' render={(query) => (
                     <EditPost params={query.match.params}/>
                   )}/>
-                  <Route path='/edit-comment/:id' render={(query) => (
+                  <Route path='/edit-comment/:parentId/:id' render={(query) => (
                     <EditComment params={query.match.params}/>
                   )}/>
                 </div>}
