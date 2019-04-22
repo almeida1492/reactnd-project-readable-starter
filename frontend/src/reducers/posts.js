@@ -27,7 +27,7 @@ export default function posts (state = {}, action){
 				[action.post.id]:  action.post,
 			}
 		case VOTE_ON_POST :
-			index = Object.keys(state).filter((key) => 
+			index = Object.keys(state).find((key) => 
 				state[key].id === action.post.id ? key : null)
 			return {
 				...state,
@@ -38,16 +38,17 @@ export default function posts (state = {}, action){
 				...action.posts,
 			}
 		case EDIT_POST :
-			index = Object.keys(state).filter((key) => 
+			index = Object.keys(state).find((key) => 
 				state[key].id === action.post.id ? key : null)
 			return {
 				...state,
 				[index]: action.post,
 			}
 		case DELETE_POST : 
-			Object.keys(state).forEach((key) => key === action.post.id ? delete state[key] : null)
+			const newState = { ...state }
+			Object.keys(state).forEach((key) => key === action.post.id ? delete newState[key] : null)
 			return {
-				...state,
+				...newState,
 			}
 		default :
 			return state

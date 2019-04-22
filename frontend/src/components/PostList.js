@@ -23,13 +23,13 @@ class PostList extends Component{
 
 	getSortedPosts(){
 		const { posts } = this.props
-		let sortedPosts = []
+		const postsClone = [...posts]
 
 		this.state.sort === this.BY_DATE 
-			? sortedPosts = posts.sort((a, b) => b.timestamp - a.timestamp)
-			: sortedPosts = posts.sort((a, b) => b.voteScore - a.voteScore)
+			? postsClone.sort((a, b) => b.timestamp - a.timestamp)
+			: postsClone.sort((a, b) => b.voteScore - a.voteScore)
 
-		return sortedPosts
+		return postsClone
 	}
 
 	render(){

@@ -18,23 +18,24 @@ export default function comments(state = {}, action){
 				[action.comment.id]: action.comment,
 			}
 		case VOTE_ON_COMMENT :
-			index = Object.keys(state).filter((key) => 
+			index = Object.keys(state).find((key) => 
 				state[key].id === action.comment.id ? key : null)
 			return {
 				...state,
 				[index]: action.comment
 			}
 		case EDIT_COMMENT :
-			index = Object.keys(state).filter((key) => 
+			index = Object.keys(state).find((key) => 
 				state[key].id === action.comment.id ? key : null)
 			return {
 				...state,
 				[index]: action.comment
 			}
 		case DELETE_COMMENT :
-			Object.keys(state).forEach((key) => key === action.comment.id ? delete state[key] : null)
+			const newState = { ...state }
+			Object.keys(state).forEach((key) => key === action.comment.id ? delete newState[key] : null)
 			return {
-				...state,
+				...newState,
 			}
 		default :
 			return state

@@ -13,7 +13,7 @@ import { objectToArray } from '../helpers/objectToArray.js'
 class App extends Component {
 
   componentDidMount(){
-    this.props.dispatch(init())
+    this.props.init()
   }
 
   getCategoryPaths(){
@@ -33,7 +33,7 @@ class App extends Component {
                   <Route exact path={this.getCategoryPaths()} render={() => (
                     <Root/>
                   )}/>
-                  <Route exact path='/post-details/:id' render={(query) => (
+                  <Route exact path='/:category/:id' render={(query) => (
                     <PostDetails params={query.match.params}/>
                   )}/>
                   <Route path='/new' render={() => (
@@ -60,4 +60,10 @@ function mapStateToProps ({ loading, categories }){
   }
 }
 
-export default connect(mapStateToProps)(App);
+function mapDispatchToProps(dispatch){
+  return {
+    init: () => dispatch(init())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

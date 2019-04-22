@@ -72,33 +72,37 @@ class PostDetails extends Component{
 		const { body, author } = this.state
 		return(
 			<div className='PostDetails'>
-				<h3>Post details</h3>
-				<Post data={postInEvidence} handleVoting={this.handlePostVoting} postType='post'/>
-				<h4>{comments.length === 0 ? 'There are no comments yet!' : 'Comments'}</h4>
-				<PostList 
-					posts={comments} 
-					handleVoting={this.handleCommentVoting} 
-					postType='comment'/>
-				<form className='new-post-form' onSubmit={this.handleSubmit}>
-					<textarea
-						placeholder='Author...'
-						value={author}
-						onChange={this.handleAuthorChange}
-						className='text-area'
-					/>
-					<textarea 
-						placeholder='Type here...'
-						value={body}
-						onChange={this.handleBodyChange}
-						className='body-area'
-					/>
-					<button
-			            type='submit'
-			            className='btn'
-			            disabled={body === ''}>
-							Submit
-			        </button>
-				</form>
+				{Object.keys(postInEvidence).length === 0 
+					? <h3>Ops... I think this post might have been deleted :(</h3>
+					: <div>
+						<h3>Post details</h3>
+						<Post data={postInEvidence} handleVoting={this.handlePostVoting} postType='post'/>
+						<h4>{comments.length === 0 ? 'There are no comments yet!' : 'Comments'}</h4>
+						<PostList 
+							posts={comments} 
+							handleVoting={this.handleCommentVoting} 
+							postType='comment'/>
+						<form className='new-post-form' onSubmit={this.handleSubmit}>
+							<textarea
+								placeholder='Author...'
+								value={author}
+								onChange={this.handleAuthorChange}
+								className='text-area'
+							/>
+							<textarea 
+								placeholder='Type here...'
+								value={body}
+								onChange={this.handleBodyChange}
+								className='body-area'
+							/>
+							<button
+					            type='submit'
+					            className='btn'
+					            disabled={body === ''}>
+									Submit
+					        </button>
+						</form>
+					</div>}
 			</div>
 		)
 	}
